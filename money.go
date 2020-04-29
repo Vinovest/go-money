@@ -309,3 +309,17 @@ func (c *Currency) Scan(value interface{}) error {
 func (c Currency) Value() (driver.Value, error) {
 	return c.Code, nil
 }
+
+// Scan is an implementation the database/sql scanner interface
+func (m *Money) Scan(value interface{}) error {
+	data, ok := value.([]byte)
+	if !ok {
+		return errors.New("Type assertion .([]byte) failed.")
+	}
+	return json.Unmarshal(data, &m)
+}
+
+// Value is an implementation of driver.Value
+func (m Money) Value() (driver.Value, error) {
+	return json.Marshal(m)
+}
