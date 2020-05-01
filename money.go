@@ -317,6 +317,7 @@ func (c Currency) Value() (driver.Value, error) {
 // Scan is an implementation the database/sql scanner interface
 func (m *Money) Scan(value interface{}) error {
 	if value == nil {
+		m = nil
 		return nil
 	}
 	data, ok := value.([]byte)
